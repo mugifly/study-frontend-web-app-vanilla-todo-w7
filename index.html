@@ -26,6 +26,15 @@
       .content {
         padding: 0 0.5rem 0 0.5rem;
       }
+
+      /* タスクリスト */
+      #taskList {
+      }
+
+      /* タスクリスト > 項目 */
+      #taskList div {
+        margin-top: 0.5rem;
+      }
     </style>
     <script src="script.js"></script>
   </head>
@@ -64,7 +73,10 @@
         <div class="content">
           <!-- タスク登録フォーム -->
           <p style="margin-top: 1.5rem">タスクの登録:</p>
-          <form>
+          <form
+            id="taskForm"
+            onSubmit="addTask(task_name.value, task_due_date.value); event.preventDefault();"
+          >
             <input type="text" name="task_name" placeholder="タスクを入力..." />
             <input type="date" name="task_due_date" />
             <button>登録</button>
@@ -73,7 +85,7 @@
 
           <!-- タスクリスト -->
           <p style="margin-top: 1.5rem">登録済みのタスク:</p>
-          <ul id="taskList" style="min-height: 5rem"></ul>
+          <div id="taskList" style="margin-left: 1rem; min-height: 5rem"></div>
           <!---->
 
           <!-- インポートフォーム (非表示) -->

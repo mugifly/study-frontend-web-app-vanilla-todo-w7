@@ -4,7 +4,7 @@ let tasks = [];
 
 window.addEventListener("load", function () {
   // リストを取得
-  taskListElem = document.querySelector("ul#taskList");
+  taskListElem = document.querySelector("#taskList");
   // LocalStorageから配列を読み込む
   loadTasks();
   // 描画
@@ -16,30 +16,40 @@ function renderTasks() {
   taskListElem.innerHTML = "";
 
   let numOfCompletedTasks = 0;
+  console.log(tasks);
   // 操作された内容で再度li要素を追加
   for (let task of tasks) {
     // リストの項目を作成
-    let taskElem = document.createElement("li");
-    taskElem.innerText = task.name;
-
-    // 項目をダブルクリックされたときの動作を設定
-    taskElem.addEventListener("dblclick", function () {
-      // リストの項目をダブルクリックされたときは、タスクを削除
-      deleteTask(task.name); // 【変更点】
-    });
+    let taskContainerElem = document.createElement("div");
+    let taskElem = document.createElement("input");
+    taskElem.type = "checkbox";
+    taskElem.id = "check" + task.name;
+    let taskLabelElem = document.createElement("label");
+    taskLabelElem.htmlFor = "check" + task.name;
+    taskLabelElem.innerText = task.name;
 
     // 項目をクリックされたときの動作を設定
-    taskElem.addEventListener("click", function () {
-      // リストの項目をクリックされたときは、タスクの完了状態をトグル
-      toggleTaskComplete(task.name);
+    taskElem.addEventListener("change", function () {
+      // リストの項目をクリックされたときは、タスクの完了状態を設定
+      window.setTimeout(() => {
+        setTaskComplete(task.name, this.checked);
+      }, 100);
     });
 
-    // タスクの完了状態に応じて項目に取り消し線を引く
+    // 項目をダブルクリックされたときの動作を設定
+    taskLabelElem.addEventListener("dblclick", function () {
+      // リストの項目をダブルクリックされたときは、タスクを削除
+      deleteTask(task.name);
+    });
+
+    // タスクの完了状態に応じて項目にチェックと取り消し線を入れる
     if (task.isCompleted) {
-      taskElem.style.textDecorationLine = "line-through";
+      taskLabelElem.style.textDecorationLine = "line-through";
+      taskElem.checked = true;
       numOfCompletedTasks++;
     } else {
-      taskElem.style.textDecorationLine = "none";
+      taskLabelElem.style.textDecorationLine = "none";
+      taskElem.checked = false;
     }
 
     // 期限表示を作成
@@ -81,13 +91,15 @@ function renderTasks() {
     taskRemainingDaysElm.style.marginLeft = "1rem";
 
     // 項目に対し、期限表示を追加
-    taskElem.appendChild(taskDueDateElem);
+    taskLabelElem.appendChild(taskDueDateElem);
 
     // 項目に対し、残日数を追加
-    taskElem.appendChild(taskRemainingDaysElm);
+    taskLabelElem.appendChild(taskRemainingDaysElm);
 
     // リストに対し、項目を追加
-    taskListElem.appendChild(taskElem);
+    taskContainerElem.appendChild(taskElem);
+    taskContainerElem.appendChild(taskLabelElem);
+    taskListElem.appendChild(taskContainerElem);
   }
 
   // 全タスクの件数を更新
@@ -163,12 +175,13 @@ function deleteTask(taskName) {
   renderTasks();
 }
 
-function toggleTaskComplete(taskName) {
+function setTaskComplete(taskName, isCompleted) {
   // 現状の配列を反復
   for (let task of tasks) {
     if (task.name == taskName) {
-      // 対象のタスク名ならば、完了状態をトグル
-      task.isCompleted = !task.isCompleted;
+      // 対象のタスク名ならば、完了状態を設定
+      task.isCompleted = isCompleted;
+      break;
     }
   }
   // LocalStorage へ配列を保存
