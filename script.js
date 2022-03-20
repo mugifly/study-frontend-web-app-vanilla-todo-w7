@@ -253,6 +253,18 @@ function csvImport() {
   console.log(event);
   const file = event.target.files[0]; // File オブジェクト
   const reader = new FileReader();
+
+  console.log("file", file);
+
+  if (
+    file.type &&
+    file.type != "text/csv" &&
+    file.type != "application/vnd.ms-excel"
+  ) {
+    window.alert("CSVファイルではありません");
+    return;
+  }
+
   reader.onload = () => {
     console.log(reader.result);
     let importTasks = reader.result.split(/\r\n|\r|\n/);
