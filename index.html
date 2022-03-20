@@ -67,6 +67,14 @@
               <li role="menuitem"><a href="#menu">終了</a></li>
             </ul>
           </li>
+          <li role="menuitem" tabindex="0" aria-haspopup="true">
+            ヘルプ(H)
+            <ul role="menu">
+              <li role="menuitem">
+                <a href="#version-dialog">バージョン情報</a>
+              </li>
+            </ul>
+          </li>
         </ul>
         <!---->
 
@@ -113,5 +121,42 @@
       </div>
       <!---->
     </div>
+
+    <!-- バージョン情報ダイアログ -->
+    <div
+      class="window is-bright"
+      id="version-dialog"
+      role="dialog"
+      aria-labelledby="dialog-title"
+    >
+      <div class="title-bar">
+        <div class="title-bar-text" id="dialog-title">
+          ToDo のバージョン情報
+        </div>
+        <div class="title-bar-controls">
+          <button aria-label="Close" onclick="history.back()"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <h2 class="instruction instruction-primary">ToDo のバージョン情報</h2>
+        <p>
+          OdenTools ToDo アプリ<br />
+          バージョン 1.0.0
+        </p>
+        <p>
+          この製品は<a
+            href="https://github.com/mugifly/study-frontend-web-app-vanilla-todo-w7/blob/w7/LICENSE"
+            target="_blank"
+            rel="noopener"
+            >MITライセンス</a
+          >の条件に基づいて次の方にライセンスされています。
+        </p>
+        <p>Everyone</p>
+      </div>
+      <footer style="text-align: right">
+        <button onclick="history.back()">OK</button>
+      </footer>
+    </div>
+    <!---->
   </body>
 </html>
