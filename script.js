@@ -1,17 +1,12 @@
-let taskListElem; // どこからでも読み書きできるように外側に変数を移動
+let taskListElem;
 
 let tasks = [];
+
 window.addEventListener("load", function () {
   // リストを取得
-  taskListElem = document.querySelector("ul");
-  // タスクを追加
-
+  taskListElem = document.querySelector("ul#taskList");
   // LocalStorageから配列を読み込む
   loadTasks();
-  //ボタンを取得する
-  const download = document.getElementById("export");
-  //ボタンがクリックされたら「downloadCSV」を実行する
-  download.addEventListener("click", csvExport, false);
   // 描画
   renderTasks();
 });

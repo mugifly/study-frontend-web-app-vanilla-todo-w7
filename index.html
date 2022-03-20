@@ -16,31 +16,75 @@
         justify-content: center;
         align-items: center;
       }
+
+      /* メニューバー */
+      ul[role="menubar"] {
+        margin: -6px -6px -6px -6px;
+      }
+
+      /* コンテンツ */
+      .content {
+        padding: 0 0.5rem 0 0.5rem;
+      }
     </style>
     <script src="script.js"></script>
   </head>
   <body>
     <div class="window" style="max-width: 640px">
+      <!-- タイトルバー -->
       <div class="title-bar">
         <div class="title-bar-text">ToDo</div>
         <div class="title-bar-controls">
           <button aria-label="Close"></button>
         </div>
       </div>
+      <!---->
       <div class="window-body">
-        <p></p>
-        <form>
-          <input type="text" name="task_name" placeholder="タスクを入力..." />
-          <input type="date" name="task_due_date" />
-          <button>登録</button>
-        </form>
+        <!-- メニューバー -->
+        <ul role="menubar">
+          <li role="menuitem" tabindex="0" aria-haspopup="true">
+            ファイル(F)
+            <ul role="menu">
+              <li role="menuitem">
+                <a href="javascript:void(0);" onClick="file.click();"
+                  >インポート...</a
+                >
+              </li>
+              <li role="menuitem" class="has-divider">
+                <a href="javascript:void(0);" onClick="csvExport();"
+                  >エクスポート</a
+                >
+              </li>
+              <li role="menuitem"><a href="#menu">終了</a></li>
+            </ul>
+          </li>
+        </ul>
+        <!---->
 
-        <ul></ul>
-        <button id="export" type="button">CSV出力</button>
-        <form id="importForm">
-          <input id="file" type="file" name="file" onchange="csvImport()" />
-        </form>
+        <div class="content">
+          <!-- タスク登録フォーム -->
+          <p style="margin-top: 1.5rem">タスクの登録:</p>
+          <form>
+            <input type="text" name="task_name" placeholder="タスクを入力..." />
+            <input type="date" name="task_due_date" />
+            <button>登録</button>
+          </form>
+          <!---->
+
+          <!-- タスクリスト -->
+          <p style="margin-top: 1.5rem">登録済みのタスク:</p>
+          <ul id="taskList" style="min-height: 5rem"></ul>
+          <!---->
+
+          <!-- インポートフォーム (非表示) -->
+          <form id="importForm" style="display: none">
+            <input id="file" type="file" name="file" onchange="csvImport()" />
+          </form>
+          <!---->
+        </div>
       </div>
+
+      <!-- ステータスバー -->
       <div class="status-bar">
         <p class="status-bar-field">
           <span id="numOfTasks"></span>
@@ -49,6 +93,7 @@
           件のタスクが完了済み
         </p>
       </div>
+      <!---->
     </div>
   </body>
 </html>
